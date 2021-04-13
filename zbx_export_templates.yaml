@@ -1,0 +1,133 @@
+zabbix_export:
+  version: '5.2'
+  date: '2021-04-13T06:59:21Z'
+  groups:
+    -
+      name: Templates
+  templates:
+    -
+      template: 'DNS Checks'
+      name: 'DNS Checks'
+      description: 'Notifications for DNS changes'
+      groups:
+        -
+          name: Templates
+      applications:
+        -
+          name: DNS
+      items:
+        -
+          name: 'A records'
+          type: EXTERNAL
+          key: 'querydns.py["{HOST.DNS}","A"]'
+          delay: 1h
+          history: 1w
+          trends: '0'
+          value_type: TEXT
+          description: 'A records for the domain name'
+          applications:
+            -
+              name: DNS
+          preprocessing:
+            -
+              type: NOT_MATCHES_REGEX
+              parameters:
+                - ZBXDNSERROR
+            -
+              type: DISCARD_UNCHANGED
+              parameters:
+                - ''
+          triggers:
+            -
+              expression: '{diff()}<>0'
+              name: 'A records were changed for the domain {HOST.NAME}'
+              priority: WARNING
+              description: 'A records associated for the domain name were changed since last check.'
+              manual_close: 'YES'
+        -
+          name: 'MX records'
+          type: EXTERNAL
+          key: 'querydns.py["{HOST.DNS}","MX"]'
+          delay: 1h
+          history: 1w
+          trends: '0'
+          value_type: TEXT
+          description: 'MX records for the domain name.'
+          applications:
+            -
+              name: DNS
+          preprocessing:
+            -
+              type: NOT_MATCHES_REGEX
+              parameters:
+                - ZBXDNSERROR
+            -
+              type: DISCARD_UNCHANGED
+              parameters:
+                - ''
+          triggers:
+            -
+              expression: '{diff()}<>0'
+              name: 'MX records were changed for the domain {HOST.NAME}'
+              priority: WARNING
+              description: 'MX records associated for the domain name were changed since last check.'
+              manual_close: 'YES'
+        -
+          name: 'NS servers'
+          type: EXTERNAL
+          key: 'querydns.py["{HOST.DNS}","NS"]'
+          delay: 1h
+          history: 1w
+          trends: '0'
+          value_type: TEXT
+          description: 'NS servers serving the domain name.'
+          applications:
+            -
+              name: DNS
+          preprocessing:
+            -
+              type: NOT_MATCHES_REGEX
+              parameters:
+                - ZBXDNSERROR
+            -
+              type: DISCARD_UNCHANGED
+              parameters:
+                - ''
+          triggers:
+            -
+              expression: '{diff()}<>0'
+              name: 'NS servers were changed for {HOST.NAME}'
+              priority: WARNING
+              description: 'NS records associated for the domain name were changed since last check.'
+              manual_close: 'YES'
+        -
+          name: 'TXT records'
+          type: EXTERNAL
+          key: 'querydns.py["{HOST.DNS}","TXT"]'
+          delay: 1h
+          history: 1w
+          trends: '0'
+          value_type: TEXT
+          description: 'TXT records for the domain name'
+          applications:
+            -
+              name: DNS
+          preprocessing:
+            -
+              type: NOT_MATCHES_REGEX
+              parameters:
+                - ZBXDNSERROR
+            -
+              type: DISCARD_UNCHANGED
+              parameters:
+                - ''
+          triggers:
+            -
+              expression: '{diff()}<>0'
+              name: 'TXT records were changed for the domain {HOST.NAME}'
+              priority: WARNING
+              description: 'TXT records associated for the domain name were changed since last check.'
+              manual_close: 'YES'
+      tags:
+        -
+          tag: DNS

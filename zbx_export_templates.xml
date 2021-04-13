@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>5.2</version>
+    <date>2021-04-13T06:59:15Z</date>
+    <groups>
+        <group>
+            <name>Templates</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>DNS Checks</template>
+            <name>DNS Checks</name>
+            <description>Notifications for DNS changes</description>
+            <groups>
+                <group>
+                    <name>Templates</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>DNS</name>
+                </application>
+            </applications>
+            <items>
+                <item>
+                    <name>A records</name>
+                    <type>EXTERNAL</type>
+                    <key>querydns.py[&quot;{HOST.DNS}&quot;,&quot;A&quot;]</key>
+                    <delay>1h</delay>
+                    <history>1w</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <description>A records for the domain name</description>
+                    <applications>
+                        <application>
+                            <name>DNS</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>NOT_MATCHES_REGEX</type>
+                            <parameters>
+                                <parameter>ZBXDNSERROR</parameter>
+                            </parameters>
+                        </step>
+                        <step>
+                            <type>DISCARD_UNCHANGED</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <triggers>
+                        <trigger>
+                            <expression>{diff()}&lt;&gt;0</expression>
+                            <name>A records were changed for the domain {HOST.NAME}</name>
+                            <priority>WARNING</priority>
+                            <description>A records associated for the domain name were changed since last check.</description>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>MX records</name>
+                    <type>EXTERNAL</type>
+                    <key>querydns.py[&quot;{HOST.DNS}&quot;,&quot;MX&quot;]</key>
+                    <delay>1h</delay>
+                    <history>1w</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <description>MX records for the domain name.</description>
+                    <applications>
+                        <application>
+                            <name>DNS</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>NOT_MATCHES_REGEX</type>
+                            <parameters>
+                                <parameter>ZBXDNSERROR</parameter>
+                            </parameters>
+                        </step>
+                        <step>
+                            <type>DISCARD_UNCHANGED</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <triggers>
+                        <trigger>
+                            <expression>{diff()}&lt;&gt;0</expression>
+                            <name>MX records were changed for the domain {HOST.NAME}</name>
+                            <priority>WARNING</priority>
+                            <description>MX records associated for the domain name were changed since last check.</description>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>NS servers</name>
+                    <type>EXTERNAL</type>
+                    <key>querydns.py[&quot;{HOST.DNS}&quot;,&quot;NS&quot;]</key>
+                    <delay>1h</delay>
+                    <history>1w</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <description>NS servers serving the domain name.</description>
+                    <applications>
+                        <application>
+                            <name>DNS</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>NOT_MATCHES_REGEX</type>
+                            <parameters>
+                                <parameter>ZBXDNSERROR</parameter>
+                            </parameters>
+                        </step>
+                        <step>
+                            <type>DISCARD_UNCHANGED</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <triggers>
+                        <trigger>
+                            <expression>{diff()}&lt;&gt;0</expression>
+                            <name>NS servers were changed for {HOST.NAME}</name>
+                            <priority>WARNING</priority>
+                            <description>NS records associated for the domain name were changed since last check.</description>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>TXT records</name>
+                    <type>EXTERNAL</type>
+                    <key>querydns.py[&quot;{HOST.DNS}&quot;,&quot;TXT&quot;]</key>
+                    <delay>1h</delay>
+                    <history>1w</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <description>TXT records for the domain name</description>
+                    <applications>
+                        <application>
+                            <name>DNS</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>NOT_MATCHES_REGEX</type>
+                            <parameters>
+                                <parameter>ZBXDNSERROR</parameter>
+                            </parameters>
+                        </step>
+                        <step>
+                            <type>DISCARD_UNCHANGED</type>
+                            <parameters>
+                                <parameter/>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <triggers>
+                        <trigger>
+                            <expression>{diff()}&lt;&gt;0</expression>
+                            <name>TXT records were changed for the domain {HOST.NAME}</name>
+                            <priority>WARNING</priority>
+                            <description>TXT records associated for the domain name were changed since last check.</description>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+            </items>
+            <tags>
+                <tag>
+                    <tag>DNS</tag>
+                </tag>
+            </tags>
+        </template>
+    </templates>
+</zabbix_export>
